@@ -12,9 +12,14 @@ $( "#submitInfo" ).submit(function( event ) {
       });
   });
 
+
   //emit 
   const socket = io();
 socket.on('smsText', function(messageSent){
-   alert({messageSent}); 
-  })
+   alert({messageSent});
+   
+   
+
+});
+
 });

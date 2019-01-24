@@ -45,8 +45,25 @@ app.post('/client', (req, res) => {
         io.emit('smsText', {messageSent});
     }, function (err) {
         console.error(err);
+});
+
+
+    app.use(express.static(__dirname + '/public'));
+    app.all('/receiveSms/', function(req, res) {
+        // Sender's phone number
+        var phoneNumRec = req.param('From');
+         // Receiver's phone number - Plivo number
+        // var messageRec = req.param('To');
+        // The text which was received
+        var messageRec = req.param('Text');
+
+        console.log ( phoneNumRec + messageRec);
+
+        io.emit('replyText', {phoneNumRec,messageRec});
+    }, function (err) {
+        console.error(err);
+        
     });
-    
 });
 
 // Define port
@@ -55,11 +72,13 @@ const port = 3000;
 // Start server
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
-     // Connect to socket.io
+// Connect to socket.io
 const io = socketio(server);
-io.on('connection', (socket) => {
-  console.log('Connected');
-  io.on('disconnect', () => {
+    io.on('connection', (socket) => {
+    console.log('Connected');
+
+    io.on('disconnect', () => {
     console.log('Disconnected');
-  })
+  
+    });
 });
