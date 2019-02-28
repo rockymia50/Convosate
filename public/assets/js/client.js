@@ -15,11 +15,7 @@ $( "#submitInfo" ).submit(function( event ) {
 
   //emit 
   const socket = io();
-socket.on('smsText', function(messageSent){
-   alert({messageSent});
-   
-   
-
-});
-
+socket.on('smsText', function messageGone(){
+   alert("Your message has been sent. Thanks!");
+  });
 });
