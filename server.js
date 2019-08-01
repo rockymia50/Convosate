@@ -1,9 +1,10 @@
+let plivo = require('plivo');
+let keys = require("./keys");
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const socketio = require('socket.io');
 require("dotenv").config();
-let plivo = require('plivo');
 
 
 // Init app
@@ -29,19 +30,19 @@ app.get('/', (req, res) => {
 
 // Catch form submit
 app.post('/client', (req, res) => {
+    'use strict';
     // res.send(req.body);
     console.log(req.body);
-    var phoneNum = 1 + req.body.number;
-    var messageSent = req.body.message;
+    let phoneNum = 1 + req.body.number;
+    let messageSent = req.body.message;
         // As the auth_id and auth_token are unspecified, Plivo will fetch them from the PLIVO_AUTH_ID and PLIVO_AUTH_TOKEN environment variables.
-    var client = new plivo.Client();
+    let client = new plivo.Client(keys.PLIVO_AUTH_ID, keys.PLIVO_AUTH_TOKEN);
     client.messages.create(
-        "17037750874 ", // src
+        "17037750874", // src
         phoneNum, // dst
         messageSent, // text
     ).then(function (response) {
         console.log(response);
-
         io.emit('smsText', {messageSent});
     }, function (err) {
         console.error(err);

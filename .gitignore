@@ -3,3 +3,5 @@ node_modules/
 
 #Keys
 .env
+
+.DS_Store
