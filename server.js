@@ -71,7 +71,7 @@ app.post('/client', (req, res) => {
 
         // console.log ( phoneNumRec + messageRec);
 
-        io.emit('replyText', {phoneNumRec,messageRec});
+        io.emit('replyText', {messageRec});
     }, function (err) {
         console.error(err);
         
