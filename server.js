@@ -48,24 +48,35 @@ app.post('/client', (req, res) => {
         console.error(err);
 });
 
+//Receive Text
+        app.post('/receive_sms/', function(request, response) {
+            // Sender's phone number
+            var from_number = request.body.From || request.query.From;
+            // Receiver's phone number - Plivo number
+            var to_number = "7037750874";
+            // The text which was received
+            var text = request.body.Text || request.query.Text;
+            console.log('Message received - From: ', from_number, ', To: ', to_number, ', Text: ', text);
+            response.send("Message received");
+        });
 
-    app.use(express.static(__dirname + '/public'));
-    app.all('/receiveSms/', function(req, res) {
-        // Sender's phone number
-        var phoneNumRec = req.param('From');
-         // Receiver's phone number - Plivo number
-        // var messageRec = req.param('To');
-        // The text which was received
-        var messageRec = req.param('Text');
 
-        console.log ( phoneNumRec + messageRec);
+
+        // // Sender's phone number
+        // var phoneNumRec = req.param('From');
+        //  // Receiver's phone number - Plivo number
+        // // var messageRec = req.param('To');
+        // // The text which was received
+        // var messageRec = req.param('Text');
+
+        // console.log ( phoneNumRec + messageRec);
 
         io.emit('replyText', {phoneNumRec,messageRec});
     }, function (err) {
         console.error(err);
         
     });
-});
+
 
 // Define port
 const port = 3000;
